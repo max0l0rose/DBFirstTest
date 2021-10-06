@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Objects;
 @Entity
 @Table(name = "order_product", schema = "db_first_test", catalog = "")
-//@IdClass(OrderProductPK.class)
 public class OrderProduct implements Serializable
 {
 //	@Embedded
@@ -61,6 +60,4 @@ public class OrderProduct implements Serializable
 	public void setOrder1ByOrderId(Order1 order1ByOrderId) {
 		this.order1ByOrderId = order1ByOrderId;
 	}
-
-
 }

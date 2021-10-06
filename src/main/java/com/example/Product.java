@@ -1,65 +1,52 @@
 package com.example;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
-	private int id;
-	private String newColumn;
+	@Basic
+	@Column(name = "user_id")
 	private Integer userId;
-	private Collection<OrderProduct> orderProductsById;
 
 	@Id
 	@Column(name = "id")
-	public int getId() {
-		return id;
-	}
+	private int id;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+	@OneToMany(mappedBy = "productByProductId")
+	private Collection<OrderProduct> orderProductsById;
 
 	@Basic
-	@Column(name = "new_column")
-	public String getNewColumn() {
-		return newColumn;
-	}
+	@Column(name = "column_name")
+	private String columnName;
 
-	public void setNewColumn(String newColumn) {
-		this.newColumn = newColumn;
-	}
+	@OneToOne(
+			mappedBy = "product"
+	)
+	//@JoinColumn(name = "prod_details", referencedColumnName = "id")
+	private ProdDetails prodDetails;
 
-	@Basic
-	@Column(name = "user_id")
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Product product = (Product) o;
-		return id == product.id && Objects.equals(newColumn, product.newColumn) && Objects.equals(userId, product.userId);
+		return id == product.id
+				       && Objects.equals(columnName, product.columnName)
+				       && Objects.equals(userId, product.userId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, newColumn, userId);
-	}
-
-	@OneToMany(mappedBy = "productByProductId")
-	public Collection<OrderProduct> getOrderProductsById() {
-		return orderProductsById;
-	}
-
-	public void setOrderProductsById(Collection<OrderProduct> orderProductsById) {
-		this.orderProductsById = orderProductsById;
+		return Objects.hash(columnName, userId, id);
 	}
 }

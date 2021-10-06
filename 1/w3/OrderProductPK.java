@@ -1,10 +1,12 @@
 package com.example;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Embeddable
 public class OrderProductPK implements Serializable {
 	private int productId;
 	private int orderId;
